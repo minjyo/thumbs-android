@@ -1,10 +1,14 @@
 package com.thumbs.android.thumbsAndroid.ui.menu
 
 import android.app.Service
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import com.thumbs.android.thumbsAndroid.R
+import com.thumbs.android.thumbsAndroid.services.ControllerService
+import com.thumbs.android.thumbsAndroid.ui.shake.DeathActivity
 import com.thumbs.android.thumbsAndroid.ui.widget.WidgetListener
 
 class MenuView(
@@ -15,14 +19,21 @@ class MenuView(
     val imageListener : WidgetListener
 ) : MenuContract.MenuView {
     override fun setView(imageUrl: String) {
+
+        var thumbsService: Service? = null
+        var thumbsWindowManager: WindowManager? = null
+
         imageListener.setImage(imageUrl)
         if( imageUrl.substringAfterLast("/") == "dead.png") {
-
-            //TODO SHAKE
+            val dialogIntent = Intent(thumbsService, DeathActivity::class.java)
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            thumbsService?.startActivity(dialogIntent)
+         //   thumbsService?.stopService(Intent(this@MenuView, ControllerService::class.java))
 
         }
-
     }
+
+    val intent = Intent(service, DeathActivity::class.java)
 
     var moveClean: View? = null
     var moveHealthy: View? = null

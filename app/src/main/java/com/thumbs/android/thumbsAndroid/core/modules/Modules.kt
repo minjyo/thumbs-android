@@ -15,6 +15,8 @@ import com.thumbs.android.thumbsAndroid.ui.register.RegisterContract
 import com.thumbs.android.thumbsAndroid.ui.register.RegisterPresenter
 import com.thumbs.android.thumbsAndroid.ui.setting.SettingContract
 import com.thumbs.android.thumbsAndroid.ui.setting.SettingPresenter
+import com.thumbs.android.thumbsAndroid.ui.shake.ShakeContract
+import com.thumbs.android.thumbsAndroid.ui.shake.ShakePresenter
 import com.thumbs.android.thumbsAndroid.ui.status.StatusContract
 import com.thumbs.android.thumbsAndroid.ui.status.StatusPresenter
 import okhttp3.OkHttpClient
@@ -98,7 +100,9 @@ val statusModule = module {
 val userEventModule = module {
     single { UserEventRepositoryImpl(get()) as UserEventRepository }
     factory { MenuPresenter(get()) as MenuContract.UserActionListerner }
+    factory { ShakePresenter(get()) as ShakeContract.ShakeEventListener }
 }
+
 
 val appModules = listOf(
     networkModule,

@@ -1,13 +1,18 @@
 package com.thumbs.android.thumbsAndroid.ui.shake
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.thumbs.android.thumbsAndroid.ui.base.BaseActivity
+import com.thumbs.android.thumbsAndroid.ui.register.RegisterActivity
+import com.thumbs.android.thumbsAndroid.ui.shake.DeathActivity
+import kotlinx.android.synthetic.main.activity_death.*
 import org.koin.android.ext.android.inject
 
 public class ShakeEvent : BaseActivity(), ShakeContract.ShakeEvent, SensorEventListener{
@@ -31,12 +36,20 @@ public class ShakeEvent : BaseActivity(), ShakeContract.ShakeEvent, SensorEventL
     private var ShakeDetector: ShakeEvent? = null
 
     init{
+        val deathActivity = DeathActivity()
         // ShakeDetector initialization
         SensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         Accelerometer = SensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         ShakeDetector = ShakeEvent()
         ShakeDetector!!.setOnShakeListener(object : ShakeContract.ShakeEvent {
             override fun onShake(count: Int) {
+                deathActivity.textView!!.text = count.toString()
+                /*
+                if(count>=50){
+                    deathActivity.button!!.setOnClickListener {
+                       // startActivity(Intent(this, RegisterActivity::class.java))
+                    }
+                } */
             }
         })
     }
